@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html >
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
 <head>
-<meta charset="ISO-8859-1">
-<title>Home page</title>
+<meta charset="UTF-8" />
+<title>Home Page</title>
 </head>
 <body>
+	<section
+		class="banner d-flex justify-content-center align-items-center">
+		<div class="text-center">
+			<h1 class="font-weight-bold">Java Student Manager</h1>
+			<p>
+			
+			</p>
+			
+			<a th:href="@{/user/profile}" class="btn bg-primary btn-lg text-white">Get Start</a>
+			
+		</div>
+	</section>
+
 
 </body>
 </html>

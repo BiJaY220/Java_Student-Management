@@ -35,7 +35,7 @@ public class Student {
 	@Column(length = 500)
 	private String about;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "stu")
     private List<Course> crs = new ArrayList<>();
      
 	
@@ -123,6 +123,12 @@ public class Student {
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", course=" + course + ", email=" + email + ", password="
+				+ password + ", grades=" + grades + ", role=" + role + ", imageurl=" + imageurl + ", payment=" + payment
+				+ ", enrolled=" + enrolled + ", about=" + about + ", crs=" + crs + "]";
 	}
 	
 	
