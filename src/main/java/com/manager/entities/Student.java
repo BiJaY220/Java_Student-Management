@@ -5,6 +5,9 @@ package com.manager.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +25,9 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@NotBlank(message="Name field is required !!")
+	@Size(min=2,max=20,message="Min 2 and max 20 characters are allowed !!")
 	private String name;
 	private String course;
 	@Column(unique = true)

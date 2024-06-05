@@ -56,12 +56,7 @@ public class HomeController {
 		model.addAttribute("title", "Homepage of student manager");
 		return "home";
 		}
-	@RequestMapping("/signup")
-	public String signup(Model model) {
-		model.addAttribute("title", "Register - Smart Contact Manger");
-		model.addAttribute("student", new Student());
-		return "signup";
-	}
+
 	@PostMapping(value="/signup")
 	public String signup(@ModelAttribute("student") Student student,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean aggreement,Model model,HttpSession session) {
@@ -88,7 +83,7 @@ public class HomeController {
 			
 			
 		}
-		return "signup";
+		return "signup.html";
 	}
 	
 	@RequestMapping("/base")
