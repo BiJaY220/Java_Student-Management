@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.manager.entities.Course;
+import com.manager.entities.Instructor;
 import com.manager.entities.Student;
 
 
@@ -20,5 +21,5 @@ public interface CourseRepo extends JpaRepository<Course, Integer> {
 	public Page<Course> findCourseByStudents(@Param("studentId") int studentId,Pageable pePageable);
 	
 	//searching a name and stuedent
-	public List<Course> findByNameContainingAndStudent(String name,Student student);
+	public List<Course> findByNameContainingAndStudent(String name,Instructor ins);
 }

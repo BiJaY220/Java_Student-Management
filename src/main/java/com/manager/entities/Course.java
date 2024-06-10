@@ -15,6 +15,7 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cId;
+	
 	private String name;
 	private int price;
 	private String timeduration;
