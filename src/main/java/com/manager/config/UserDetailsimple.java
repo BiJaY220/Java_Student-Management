@@ -17,13 +17,13 @@ public class UserDetailsimple implements UserDetailsService
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		//fetch student from database
-		 Student student=userRepository.getStudentByUserName(username);
-		if(student==null)
+		//fetch instructor from database
+		 Instructor instructor =userRepository.getInstructorByUserName(username);
+		if(instructor==null)
 		{
-			throw new UsernameNotFoundException("student could not be found !!");
+			throw new UsernameNotFoundException("instructor could not be found !!");
 		}
-		OurDetails ourDetails=new OurDetails(student);
+		OurDetails ourDetails=new OurDetails(instructor);
 		
 		return ourDetails;
 	}

@@ -9,17 +9,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.manager.entities.Course;
+import com.manager.entities.Instructor;
 import com.manager.entities.Instructor;
 import com.manager.entities.Student;
 
 
-public interface CourseRepo extends JpaRepository<Course, Integer> {
+public interface StudentRepo extends JpaRepository<Student, Integer> {
 
 	//for the pagination
-	@Query("from Course as c where c.student.id =:studentId")
-	public Page<Course> findCourseByStudents(@Param("studentId") int studentId,Pageable pePageable);
+	@Query("from Student as s where s.instructor.id =:instructorId")
+	public Page<Student> findStudentByInstructor(@Param("instructorId") int instructorId,Pageable pePageable);
 	
-	//searching a name and stuedent
-	public List<Course> findByNameContainingAndStudent(String name,Instructor ins);
+	//searching a name and student
+	public List<Instructor> findByNameContainingAndInstructors(String name,Instructor ins);
 }

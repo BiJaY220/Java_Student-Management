@@ -61,12 +61,12 @@ public class Configss
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
         .authorizeRequests().requestMatchers("/admin/**").hasRole("ADMIN")
-		.requestMatchers("/student/**").hasRole("USER")
+		.requestMatchers("/instructor/**").hasRole("USER")
 		.requestMatchers("/**").permitAll().and()
 		.formLogin()
 		.loginPage("/signin")
-		.loginProcessingUrl("/dologin")
-		.defaultSuccessUrl("/student/index")
+		.loginProcessingUrl("/loginvayo")
+		.defaultSuccessUrl("/instructor/index")
 		.and().csrf().disable();
         return http.build();
     }

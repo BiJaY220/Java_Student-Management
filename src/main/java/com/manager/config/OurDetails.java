@@ -12,28 +12,28 @@ import com.manager.entities.*;
 public class OurDetails implements UserDetails {
 	
 
-	private Student student;
-
+	//private Student student;
+	private Instructor instructor;
 	
-	public OurDetails(Student student) {
+	public OurDetails(Instructor instructor) {
 		super();
-		this.student = student;
+		this.instructor = instructor;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(student.getRole());
+		SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(instructor.getRole());
 		return List.of(simpleGrantedAuthority);
 	}
 
 	@Override
 	public String getPassword() {
-		return student.getPassword();
+		return instructor.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return student.getEmail();
+		return instructor.getEmail();
 	}
 
 	@Override

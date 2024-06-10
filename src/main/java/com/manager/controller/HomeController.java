@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manager.dao.UserRepo;
-import com.manager.entities.Course;
+
+import com.manager.entities.Instructor;
 import com.manager.entities.Student;
 import com.manager.utility.Messages;
 
@@ -58,7 +59,7 @@ public class HomeController {
 		}
 
 	@PostMapping(value="/signup")
-	public String signup(@ModelAttribute("student") Student student,
+	public String signup(@ModelAttribute("instructor") Instructor instructor,
 			@RequestParam(value = "agreement", defaultValue = "false") boolean aggreement,Model model,HttpSession session) {
 		
 		try {
@@ -67,18 +68,18 @@ public class HomeController {
 				throw new Exception("the checkbox is not marked!!");
 			}
 			System.out.println("aggreed "+aggreement);
-			System.out.println("Student :"+student);
-			Student rStudent = this.userrep.save(student);
+			System.out.println("Instructor :"+instructor);
+			Instructor instructor2 = this.userrep.save(instructor);
 			
 			
-			model.addAttribute("student", new Student());
+			model.addAttribute("instructor", new Instructor());
 			//message
 			
 
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("student", student);
+			model.addAttribute("instructor", instructor);
 			session.setAttribute("message", new Messages("kei galat vayo"+e.getMessage(),"alert-danger"));
 			
 			
