@@ -12,12 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manager.dao.StudentRepo;
 import com.manager.dao.UserRepo;
 import com.manager.entities.Instructor;
 import com.manager.entities.Student;
+import com.manager.utility.Messages;
+
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -56,11 +60,11 @@ public class InstructorController {
 	public String Opendashboard(Model model, Principal principal) {
 		model.addAttribute("title","Instructor Dashboard");
 		
-		return "home/instructor_dashboard";
+		return "Instructor/instructor_dashboard";
 		
 		
 	}
-	@RequestMapping("/{id}/student")
+	@RequestMapping("/{sid}/student")
 	public String showStudentDetails(@PathVariable("id") Integer id,Model model,
 			Principal principal)
 	{
@@ -72,8 +76,10 @@ public class InstructorController {
 			 model.addAttribute("student" , student);
 			 model.addAttribute("title ", student.getName());
 			 }
-	return "/home/student_detail";
+	return "/Instructor/student_detail";
 	}
+	
+	
 	@RequestMapping("/show-students/{page}")
 	public String showStudents(@PathVariable("page") Integer page,Model model,
 			Principal principal)
@@ -92,17 +98,46 @@ public class InstructorController {
 		
 		
 		
-	return "/home/show_students";
+	return "/Instructor/show_students";
 	}
 	
 	
-	@RequestMapping("/{id}/student")
-	public String deleteStudent(@PathVariable("id") Integer id, Model model ,
-			Principal principal) {
+	@RequestMapping("/{sid}/student")
+	public String deleteStudent(@PathVariable("sid") Integer id, Model model ,
+			Principal principal, HttpSession session) {
+		Optional<Student> studentOptional = this.studentRepo.findById(id);
+		Student student = studentOptional.get();
+		Instructor instructor = this.userRepo.getInstructorByUserName(principal.getName());
+		instructor.getStu().remove(student);
+		
+		// after deletion 
+		this.userRepo.save(instructor);
+		// give a message 
+		session.setAttribute("message", new Messages("The student has been deleted","success"));
 		
 		
-		return "/home/delete_page";
+		//Student student = th
+		
+		return "redirect:/Instructor/show_students/0";
 	}
 	
+	@PostMapping("/update-student/{sid}")
+	public String UpdateStudent(@PathVariable("sid") Integer id,Model model) {
+		model.addAttribute("title","Update the Student");
+		this.studentRepo.findById(id);
+		Student student = this.studentRepo.findById(id).get();
+		model.addAttribute("student",student);
+		
+		
+		return"Instructor/update_form";
+	}
+	// proccessing the update 
+	
+	//for the profile 
+	@GetMapping("/profile")
+	public String profile(Model model) {
+		model.addAttribute("title", "Profile page");
+		return"Instructor/profile";
+	}
 
 }

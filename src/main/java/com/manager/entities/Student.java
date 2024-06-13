@@ -25,7 +25,7 @@ import jakarta.persistence.Table;
 public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private int sid;
 	
 	@NotBlank(message="Name field is required !!")
 	@Size(min=2,max=20,message="Min 2 and max 20 characters are allowed !!")
@@ -48,12 +48,12 @@ public class Student {
 
 
 	public int getId() {
-		return id;
+		return sid;
 	}
 
 
 	public void setId(int id) {
-		this.id = id;
+		this.sid = id;
 	}
 
 
@@ -169,7 +169,7 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", course=" + course + ", email=" + email + ", password="
+		return "Student [id=" + sid + ", name=" + name + ", course=" + course + ", email=" + email + ", password="
 				+ password + ", grades=" + grades + ", role=" + role + ", imageurl=" + imageurl + ", payment=" + payment
 				+ ", enrolled=" + enrolled + ", about=" + about + ", ins=" + ins + "]";
 	}
@@ -180,7 +180,7 @@ public class Student {
 			String course, String email, String password, String grades, String role, String imageurl, String payment,
 			boolean enrolled, String about, Instructor ins) {
 		super();
-		this.id = id;
+		this.sid = id;
 		this.name = name;
 		this.course = course;
 		this.email = email;
