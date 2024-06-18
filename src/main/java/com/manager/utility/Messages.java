@@ -28,6 +28,10 @@ public class Messages {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public Messages(String string) {
+		// TODO Auto-generated constructor stub
+		this.contentString = string;
+	}
 	
 
 }

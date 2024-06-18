@@ -1,9 +1,15 @@
 package com.manager.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.manager.dao.StudentRepo;
 import com.manager.dao.UserRepo;
@@ -105,6 +114,7 @@ public class InstructorController {
 	@RequestMapping("/{sid}/student")
 	public String deleteStudent(@PathVariable("sid") Integer id, Model model ,
 			Principal principal, HttpSession session) {
+		// this method defi.........
 		Optional<Student> studentOptional = this.studentRepo.findById(id);
 		Student student = studentOptional.get();
 		Instructor instructor = this.userRepo.getInstructorByUserName(principal.getName());
@@ -132,7 +142,45 @@ public class InstructorController {
 		return"Instructor/update_form";
 	}
 	// proccessing the update 
+	@RequestMapping(value="/process-update", method = RequestMethod.POST)
+	public String updateDetail(@ModelAttribute Student student, Model model,@RequestParam("imageUrl") MultipartFile file, HttpSession session , Principal principal) {
+		try {
+			// previous details 
+			
+			Student prevdetailStudent = this.studentRepo.findById(student.getId()).get();
+			if (!file.isEmpty()) {
+				// 
+				File deletFile =  new ClassPathResource("static/img").getFile();
+				File filedelFile = new File(deletFile, prevdetailStudent.getImageurl());
+				filedelFile.delete();
+				// 
+				File saveFile = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				student.setImageurl(file.getOriginalFilename());
+				
+			
+			}else {
+				student.setImageurl(prevdetailStudent.getImageurl());
+			}
+			Instructor instructor = this.userRepo.getInstructorByUserName(principal.getName());
+			student.setIns(instructor);
+			this.studentRepo.save(student);
+			session.setAttribute("message", new Messages("New student has been updated!!"));
+			
+			
+			
 	
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		
+		return "redirect:/instructor/"+student.getId()+"/student";
+	}
 	//for the profile 
 	@GetMapping("/profile")
 	public String profile(Model model) {
